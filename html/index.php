@@ -1,21 +1,18 @@
 <?php
 define('__ROOT__', dirname(dirname(__FILE__)));
-require_once(__ROOT__.'/phplib/SetupConfig.php');
+require_once(__ROOT__.'/phplib/SetupConfigLoader.php');
 
 function aprint($key, $value = ""){
     error_log(sprintf($key.": %s", $value));
 }
 
-$setup_config = SetupConfigLoader::load();
+$setup_config = SetupConfigLoader::getInstance();
  ?>
 <!DOCTYPE html>
 <html>
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link rel="stylesheet" type="text/css" href="css/style.css">
-        <style>
-            
-        </style>
     </head>
     <body onload="startGame()">
         <script>
