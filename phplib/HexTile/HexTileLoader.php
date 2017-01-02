@@ -4,15 +4,34 @@ require_once(dirname(__FILE__).'/HexTile.php');
 class HexTileLoader{
     
     public static function getInstance($type, $coord){
-        return new HexTile($type, $coord);
+        return new HexTile($type, $coord, null);
     }
     
-    public static function getArray($types, $coords){
+    //-----------------------------------
+    
+    public static function getArray($types, $coords, $num_alphas){
         $tiles = array();
+        
+        $num_alphas = array_reverse($num_alphas);
         for($idx = 0; $idx < count($types); $idx++){
-            array_push($tiles, new HexTile($types[$idx], $coords[$idx]));
+            if(isResource($types[$idx])){
+                array_push($tiles, new HexTile($types[$idx], $coords[$idx], array_pop($num_alphas)));
+            }
+            else{
+                array_push($tiles, new HexTile($types[$idx], $coords[$idx], null));
+            }
         }
         
         return $tiles;
     }
+    
+    //------------------------------------   
 }
+
+function isResource($type){
+        return ($type === RESOURCE_ORE ||
+                    $type === RESOURCE_BRICK ||
+                    $type === RESOURCE_WOOD ||
+                    $type === RESOURCE_SHEEP ||
+                    $type === RESOURCE_WHEAT);
+    }

@@ -3,6 +3,7 @@ define('__TILE_PATH__', dirname(dirname(__FILE__)).'/HexTile');
 require_once(__TILE_PATH__.'/HexTileLoader.php');
 require_once(dirname(__FILE__).'/GameBoard.php');
 
+
 class BasicGameBoard extends GameBoard{
     
     public function getTiles(){
@@ -18,7 +19,36 @@ class BasicGameBoard extends GameBoard{
         $all_types = array_merge($sea_types, $resource_types);
         $all_coords = array_merge($sea_coords, $resource_coords);
         
-        return HexTileLoader::getArray($all_types, $all_coords);
+        // get numbers for tiles
+        $all_num_alpha = $this->makeNumAlpha();
+        
+        return HexTileLoader::getArray($all_types, $all_coords, $all_num_alpha);
+    }
+    
+    //-----------------------------
+    
+    private function makeNumAlpha(){
+        
+        return array(
+            array('num' => 5, 'alpha' => "A"),
+            array('num' => 2, 'alpha' => "B"),
+            array('num' => 6, 'alpha' => "C"),
+            array('num' => 3, 'alpha' => "D"),
+            array('num' => 8, 'alpha' => "E"),
+            array('num' => 10, 'alpha' => "F"),
+            array('num' => 9,'alpha' => "G"),
+            array('num' => 12, 'alpha' => "H"),
+            array('num' => 11, 'alpha' => "I"),
+            array('num' => 4, 'alpha' => "J"),
+            array('num' => 8, 'alpha' => "K"),
+            array('num' => 10, 'alpha' => "L"),
+            array('num' => 9, 'alpha' => "M"),
+            array('num' => 4, 'alpha' => "N"),
+            array('num' => 5, 'alpha' => "O"),
+            array('num' => 6, 'alpha' => "P"),
+            array('num' => 3, 'alpha' => "Q"),
+            array('num' => 11, 'alpha' => "R")
+            );        
     }
     
     //-----------------------------
@@ -27,16 +57,16 @@ class BasicGameBoard extends GameBoard{
         $resources = array();
     
         for($i = 0; $i < 3; $i++){
-            array_push($resources, 'ore');
-            array_push($resources, 'brick');        
+            array_push($resources, RESOURCE_ORE);
+            array_push($resources, RESOURCE_BRICK);        
         }
         
         for($i = 0; $i < 4; $i++){
-            array_push($resources, 'wood');
-            array_push($resources, 'sheep');  
-            array_push($resources, 'wheat');        
+            array_push($resources, RESOURCE_WOOD);
+            array_push($resources, RESOURCE_SHEEP);  
+            array_push($resources, RESOURCE_WHEAT);        
         }    
-        array_push($resources, 'desert');
+        array_push($resources, DESERT);
         shuffle($resources);
         
         return $resources;
@@ -46,16 +76,16 @@ class BasicGameBoard extends GameBoard{
     
     private function makeSeaTypes(){
         $two4one = array();
-        array_push($two4one, '241ore');
-        array_push($two4one, '241brick');
-        array_push($two4one, '241wood');
-        array_push($two4one, '241sheep');
-        array_push($two4one, '241wheat');
+        array_push($two4one, SEA_TWO_FOR_ONE_ORE);
+        array_push($two4one, SEA_TWO_FOR_ONE_BRICK);
+        array_push($two4one, SEA_TWO_FOR_ONE_WOOD);
+        array_push($two4one, SEA_TWO_FOR_ONE_SHEEP);
+        array_push($two4one, SEA_TWO_FOR_ONE_WHEAT);
         shuffle($two4one);
         
         $three4one = array();
         for($i = 0; $i < 4; $i++){
-            array_push($three4one, '341');
+            array_push($three4one, SEA_THREE_FOR_ONE);
         }
         
         $trades = array(); // alternate 241 and 341
@@ -75,7 +105,7 @@ class BasicGameBoard extends GameBoard{
                 array_push($sea_types, array_pop($trades));
             }
             else{
-                array_push($sea_types, 'sea');
+                array_push($sea_types, SEA);
             }           
         }
         
@@ -104,7 +134,7 @@ class BasicGameBoard extends GameBoard{
         $xpos = $center_x;
         $ypos = $center_y + $row_num * $tile_height;
         
-        array_push($coords, array($xpos, $ypos));
+        array_push($coords, array('xpos' => $xpos, 'ypos' =>$ypos));
         
         for($i = 0; $i < $num_sides; $i++){
             for($j = 0; $j < $row_num; $j++){
@@ -114,7 +144,7 @@ class BasicGameBoard extends GameBoard{
                 $xpos += ($xdir * $dx);
                 $ypos += ($ydir * $dy);
                 if(!($i == $num_sides - 1 && $j == $row_num - 1)){ // do not make duplicate of first tile in row
-                    array_push($coords, array($xpos, $ypos));
+                    array_push($coords, array('xpos' => $xpos, 'ypos' =>$ypos));
                 }
             }
             
@@ -122,4 +152,5 @@ class BasicGameBoard extends GameBoard{
         
         return $coords;    
     }
+    
 }

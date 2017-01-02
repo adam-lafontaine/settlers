@@ -20,9 +20,10 @@ class SetupConfig{
         $tile_config = array();
         
         foreach($board->getTiles() as $tile){
-            $xpos = $tile->getCoord()[0];
-            $ypos = $tile->getCoord()[1];
-            array_push($tile_config, array('type' => $tile->getType(), 'coords' => array('xpos' => $xpos, 'ypos' => $ypos)));
+            $xpos = $tile->getCoord()['xpos'];
+            $ypos = $tile->getCoord()['ypos'];
+            array_push($tile_config, array('type' => $tile->getType(), 'num_alpha' => $tile->getNumAlpha(), 'coords' => array('xpos' => $xpos, 'ypos' => $ypos)));
+            
         }
         
         return json_encode($tile_config);            
