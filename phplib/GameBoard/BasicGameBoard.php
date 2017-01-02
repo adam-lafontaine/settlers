@@ -1,6 +1,8 @@
 <?php
-define('__TILE_PATH__', dirname(dirname(__FILE__)).'/HexTile');
-require_once(__TILE_PATH__.'/HexTileLoader.php');
+define('__HEXTILE_PATH__', dirname(dirname(__FILE__)).'/HexTile');
+define('__NUMTILE_PATH__', dirname(dirname(__FILE__)).'/NumberTile');
+require_once(__HEXTILE_PATH__.'/HexTileLoader.php');
+require_once(__NUMTILE_PATH__.'/NumberTileLoader.php');
 require_once(dirname(__FILE__).'/GameBoard.php');
 
 
@@ -20,16 +22,16 @@ class BasicGameBoard extends GameBoard{
         $all_coords = array_merge($sea_coords, $resource_coords);
         
         // get numbers for tiles
-        $all_num_alpha = $this->makeNumAlpha();
+        $all_number_tiles = $this->makeNumberTiles();
         
-        return HexTileLoader::getArray($all_types, $all_coords, $all_num_alpha);
+        return HexTileLoader::getArray($all_types, $all_coords, $all_number_tiles);
     }
     
     //-----------------------------
     
-    private function makeNumAlpha(){
+    private function makeNumberTiles(){
         
-        return array(
+        $num_alpha_array = array(
             array('num' => 5, 'alpha' => "A"),
             array('num' => 2, 'alpha' => "B"),
             array('num' => 6, 'alpha' => "C"),
@@ -48,7 +50,15 @@ class BasicGameBoard extends GameBoard{
             array('num' => 6, 'alpha' => "P"),
             array('num' => 3, 'alpha' => "Q"),
             array('num' => 11, 'alpha' => "R")
-            );        
+            );
+            
+            $num_tiles = array();
+            
+            foreach($num_alpha_array as $num_alpha){
+                array_push($num_tiles, NumberTileLoader::getInstance($num_alpha));
+            }
+            
+            return $num_tiles;
     }
     
     //-----------------------------

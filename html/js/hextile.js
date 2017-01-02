@@ -1,8 +1,8 @@
-function hexTile(size, type, center_x, center_y, num_alpha){
+function hexTile(size, type, center_x, center_y, num_tile){
   this.num_sides = 6;
   this.size = size;
   this.type = type
-  this.num_alpha = num_alpha;
+  this.num_tile = num_tile;
   this.color = COLOR_MAP[type];
   this.center_xy = {'xpos' : center_x, 'ypos' : center_y};
   this.vertices = calcPolygonCoords(this.num_sides, this.size, center_x, center_y);      
