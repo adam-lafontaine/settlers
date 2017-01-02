@@ -7,9 +7,11 @@ function gameBoard(context, num_players, tile_size, center_x, center_y){
     
     var tile_config = TILE_CONFIG;
     for(var i = 0; i < tile_config.length; i++)
-    {
+    {        
+        var type = tile_config[i]['type'];
         var coords = scaleCoords(tile_config[i]['coords'], tile_size, center_x, center_y);
-        this.tiles.push(new hexTile(tile_size, tile_config[i]['type'], coords['xpos'],  coords['ypos']));
+        var num_tile =  tile_config[i]['num_tile'];
+        this.tiles.push(new hexTile(tile_size, type, coords['xpos'],  coords['ypos'], num_tile));
     }
     
     drawBoard(context, this.tiles);
@@ -37,6 +39,38 @@ function drawBoard(context, tiles){
 //----------------------------------------------
 
 function drawTile(context, tile){
-    drawPolygon(context, tile.color, tile.vertices);  
+    drawPolygon(context, tile.color, tile.vertices);
+    
+    if(tile.num_tile !== null){
+        var radius = NUM_ALPHA_RADIUS;
+        drawNumberTile(context, tile.center_xy, NUM_ALPHA_RADIUS, tile.num_tile);
+    }    
 }
 
+//------------------------------------
+
+function drawNumberTile(context, center_xy, radius, num_tile){
+    drawCircle(context, '#FFFFFF', center_xy, radius);
+    
+    context.textAlign = 'center';
+    
+    // draw letter    
+    context.fillStyle = '#FF0000';
+    var ypos = center_xy['ypos'] - 0.45 * radius;
+    var font_size = 0.5 * radius;    
+    context.font = font_size.toString()+ 'px Arial';
+    context.fillText(num_tile['alpha'], center_xy['xpos'], ypos);
+    
+    // draw dots
+    ypos = center_xy['ypos'] + 0.7 * radius;
+    font_size = 0.8 * radius;
+    context.font = 'bold ' + font_size.toString()+ 'px Arial';   
+    context.fillText(Array(1 + num_tile['prob']).join("."), center_xy['xpos'], ypos);
+    
+    // draw number
+    context.fillStyle = '#000000';
+    ypos = center_xy['ypos'] + 0.3 * radius;
+    font_size = 0.8 * radius;
+    context.font = 'bold ' + font_size.toString()+ 'px Arial';   
+    context.fillText(num_tile['num'], center_xy['xpos'], ypos);
+}

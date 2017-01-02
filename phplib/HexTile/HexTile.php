@@ -4,12 +4,12 @@ class HexTile{
     
     var $type;
     var $coord; // (xpos, ypos)
-    var $num_alpha; // the number on the tile with its letter (num, alpha)
+    var $number_tile; 
     
-    function __construct($type, $coord, $num_alpha){
+    function __construct($type, $coord, $num_tile){
         $this->type = $type;
         $this->coord = $coord;
-        $this->num_alpha = $num_alpha;
+        $this->number_tile = $num_tile;
     }
     
     public function getType(){
@@ -20,7 +20,7 @@ class HexTile{
         return $this->coord;
     }
     
-    public function getNumAlpha(){
-        return $this->num_alpha;
+    public function getNumberTile(){
+        return $this->number_tile;
     }
 }

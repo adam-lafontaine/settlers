@@ -1,10 +1,9 @@
 const CANVAS_WIDTH = 650;
 const CANVAS_HEIGHT = 650;
 const TILE_SIZE = 50;
+const NUM_ALPHA_RADIUS = 20;
 
 const NUM_PLAYERS = setup_config['num_players'];
-const TILE_COORDS = setup_config['tile_coords'];
-const TILE_TYPES = setup_config['tile_types'];
 const TILE_CONFIG = setup_config['tile_config'];
 
 const COLOR_MAP = {

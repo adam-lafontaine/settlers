@@ -9,10 +9,10 @@ class HexTileLoader{
     
     //-----------------------------------
     
-    public static function getArray($types, $coords, $num_alphas){
+    public static function getArray($types, $coords, $num_tiles){
         $tiles = array();
         
-        $num_alphas = array_reverse($num_alphas);
+        $num_alphas = array_reverse($num_tiles);
         for($idx = 0; $idx < count($types); $idx++){
             if(isResource($types[$idx])){
                 array_push($tiles, new HexTile($types[$idx], $coords[$idx], array_pop($num_alphas)));
@@ -34,4 +34,4 @@ function isResource($type){
                     $type === RESOURCE_WOOD ||
                     $type === RESOURCE_SHEEP ||
                     $type === RESOURCE_WHEAT);
-    }
+}
