@@ -1,6 +1,9 @@
-function gameBoard(context, num_players, tile_size, center_x, center_y){
+function gameBoard(context, num_players){
     var num_rows = num_players > 4 ? 5 : 4;
     var num_sides = 6;
+    var center_x = context.canvas.width / 2;
+    var center_y = context.canvas.height / 2;
+    var tile_size = context.canvas.width * TILE_SIZE_FACTOR;
     var tile_height = tile_size * Math.sqrt(3);    
     
     this.tiles = [];
@@ -42,8 +45,8 @@ function drawTile(context, tile){
     drawPolygon(context, tile.color, tile.vertices);
     
     if(tile.num_tile !== null){
-        var radius = NUM_ALPHA_RADIUS;
-        drawNumberTile(context, tile.center_xy, NUM_ALPHA_RADIUS, tile.num_tile);
+        var radius = context.canvas.width * NUM_TILE_RADIUS_FACTOR;
+        drawNumberTile(context, tile.center_xy, radius, tile.num_tile);
     }    
 }
 

@@ -1,8 +1,3 @@
-
-
-var center_x = CANVAS_WIDTH / 2;
-var center_y = CANVAS_HEIGHT / 2;
-
 var game_board;
 
 var game_area = {
@@ -29,5 +24,5 @@ function updateGameArea(){
 
 function startGame(){
     game_area.start();
-    game_board = new gameBoard(game_area.context, NUM_PLAYERS, TILE_SIZE, center_x, center_y);
+    game_board = new gameBoard(game_area.context, NUM_PLAYERS);
 }
